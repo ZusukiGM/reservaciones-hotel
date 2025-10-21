@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservación de Hotel Profesional</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  /* Cards de habitaciones */
+  .rooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .card h3 {
+    margin: 0 0 10px 0;
+  }
+  .availability {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  select, input[type="date"], button {
+    padding: 10px;
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* Registro de recepcionista */
+  .records {
+    margin-top: 50px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #007BFF;
+    color: white;
+  }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Reservación de Hotel</h1>
+
+  <label for="checkin">Check-in:</label>
+  <input type="date" id="checkin">
+
+  <label for="checkout">Check-out:</label>
+  <input type="date" id="checkout">
+
+  <div class="rooms" id="roomsContainer">
+    <!-- Cards de habitaciones -->
+  </div>
+
+  <button id="reserveBtn" disabled>Reservar</button>
+
+  <div class="records">
+    <h2>Registro de Reservaciones (Recepción)</h2>
+    <label for="filter">Filtrar por:</label>
+    <select id="filter">
+      <option value="day">Día</option>
+      <option value="week">Semana</option>
+      <option value="month">Mes</option>
+      <option value="year">Año</option>
+    </select>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo de Habitación</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody id="recordsTable">
+        <!-- Registros -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const rooms = [
+    { type: "Habitación Sencilla", available: 3 },
+    { type: "Habitación Doble", available: 2 },
+    { type: "Suite", available: 0 },
+    { type: "Suite Deluxe", available: 1 }
+  ];
+
+  const reservations = []; // Registro de reservas
+
+  const roomsContainer = document.getElementById('roomsContainer');
+  const reserveBtn = document.getElementById('reserveBtn');
+  const checkin = document.getElementById('checkin');
+  const checkout = document.getElementById('checkout');
+  const filter = document.getElementById('filter');
+  const recordsTable = document.getElementById('recordsTable');
+
+  function renderRooms() {
+    roomsContainer.innerHTML = '';
+    rooms.forEach((room, index) => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      const title = document.createElement('h3');
+      title.textContent = room.type;
+
+      const avail = document.createElement('p');
+      avail.classList.add('availability');
+      avail.textContent = `Disponibles: ${room.available}`;
+
+      const select = document.createElement('select');
+      if(room.available === 0){
+        select.disabled = true;
+        const option = document.createElement('option');
+        option.textContent = "No disponible";
+        select.appendChild(option);
+      } else {
+        const option0 = document.createElement('option');
+        option0.value = "";
+        option0.textContent = "Seleccionar";
+        select.appendChild(option0);
+
+        for(let i=1; i<=room.available; i++){
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          select.appendChild(option);
+        }
+      }
+      select.addEventListener('change', checkReservation);
+
+      card.appendChild(title);
+      card.appendChild(avail);
+      card.appendChild(select);
+
+      roomsContainer.appendChild(card);
+    });
+  }
+
+  function checkReservation() {
+    const selects = document.querySelectorAll('.card select');
+    let anySelected = false;
+    selects.forEach(select => {
+      if(select.value !== "") anySelected = true;
+    });
+    reserveBtn.disabled = !anySelected;
+  }
+
+  reserveBtn.addEventListener('click', () => {
+    const selects = document.querySelectorAll('.card select');
+    const today = new Date();
+    selects.forEach((select, i) => {
+      const qty = parseInt(select.value);
+      if(qty && qty > 0){
+        rooms[i].available -= qty;
+        reservations.push({
+          date: today,
+          type: rooms[i].type,
+          quantity: qty
+        });
+      }
+    });
+    alert("¡Reserva realizada con éxito!");
+    renderRooms();
+    renderRecords();
+  });
+
+  function renderRecords() {
+    const now = new Date();
+    const filterValue = filter.value;
+    recordsTable.innerHTML = '';
+
+    reservations.forEach(r => {
+      let include = false;
+      const diffDays = Math.floor((now - r.date) / (1000*60*60*24));
+      switch(filterValue){
+        case 'day':
+          include = r.date.toDateString() === now.toDateString();
+          break;
+        case 'week':
+          const startWeek = new Date(now);
+          startWeek.setDate(now.getDate() - now.getDay()); // Domingo
+          const endWeek = new Date(startWeek);
+          endWeek.setDate(startWeek.getDate() + 6);
+          include = r.date >= startWeek && r.date <= endWeek;
+          break;
+        case 'month':
+          include = r.date.getMonth() === now.getMonth() && r.date.getFullYear() === now.getFullYear();
+          break;
+        case 'year':
+          include = r.date.getFullYear() === now.getFullYear();
+          break;
+      }
+      if(include){
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${r.date.toLocaleString()}</td><td>${r.type}</td><td>${r.quantity}</td>`;
+        recordsTable.appendChild(row);
+      }
+    });
+  }
+
+  filter.addEventListener('change', renderRecords);
+
+  renderRooms();
+  renderRecords();
+</script>
+</body>
+</html>
