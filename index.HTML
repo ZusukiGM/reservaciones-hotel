@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservaciones Hotel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Reservaciones</h1>
+    <div id="habitaciones"></div>
+
+    <h2>Realizar Reserva</h2>
+    <form id="formReserva">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="email" id="email" placeholder="Correo" required>
+        <select id="habitacion" required></select>
+        <input type="date" id="checkin" required>
+        <input type="date" id="checkout" required>
+        <input type="number" id="cantidad" placeholder="Cantidad" min="1" required>
+        <button type="submit">Reservar</button>
+    </form>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

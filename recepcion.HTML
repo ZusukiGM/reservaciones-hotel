@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepción - Reservas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Reservas Registradas</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Habitación</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody id="tablaReservasBody"></tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
