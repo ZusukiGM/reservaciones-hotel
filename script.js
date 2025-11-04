@@ -5,13 +5,13 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ------------------- Configuración de Capacidad Máxima -------------------
-// Mapeo del tipo de habitación a la capacidad máxima de personas (Basado en la información proporcionada)
+// Mapeo del tipo de habitación a la capacidad máxima de personas (Basado en información anterior)
 const CAPACIDAD_MAXIMA_MAP = {
     // Los nombres deben coincidir exactamente con los tipos de la BD (columna 'tipo')
     "Habitación Sencilla": 1, 
     "Habitación Doble": 2, 
-    "Suite": 4, // "Suite con terraza y jacuzzi" -> 4 personas (asumiendo)
-    "Suite Deluxe": 6, // Asumiendo que esta es una de las suites grandes (4-6 personas)
+    "Suite": 4, // Asumiendo "Suite con terraza y jacuzzi"
+    "Suite Deluxe": 6, 
     "Suite Sencilla": 2, 
     "Suite Doble": 4, 
     "Junior Suite": 4,
@@ -27,7 +27,6 @@ function showFeedback(message, isError = false) {
         setTimeout(() => msgElement.textContent = '', 5000); 
     } else if (isError) {
         console.error("Feedback Error:", message);
-        // Usamos alert como último recurso si el elemento no existe en la página
         alert(message); 
     }
 }
@@ -61,7 +60,7 @@ async function cargarHabitaciones() {
         selectHabitacion.innerHTML = '<option value="">Seleccione tipo de habitación...</option>' + habitaciones
             .filter(h => h.disponible > 0)
             .map(h => {
-                const maxHuespedes = CAPACIDAD_MAXIMA_MAP[h.tipo] || 1; // Fallback seguro
+                const maxHuespedes = CAPACIDAD_MAXIMA_MAP[h.tipo] || 1; 
                 return `<option value="${h.id}" data-disponible="${h.disponible}" data-max-huespedes="${maxHuespedes}">${h.tipo} (Máx: ${maxHuespedes} pers.)</option>`;
             })
             .join('');
@@ -72,39 +71,44 @@ async function cargarHabitaciones() {
     }
 }
 
-// ------------------- Función: Manejar cambio de habitación (NUEVO) -------------------
-function actualizarLimiteHuespedes() {
+// ------------------- Función: Generar Selector de Huéspedes (NUEVO) -------------------
+function generarSelectorHuespedes() {
     const selectHabitacion = document.getElementById('habitacion');
-    const inputCantidad = document.getElementById('cantidad');
+    const selectCantidad = document.getElementById('cantidad');
     const selectedOption = selectHabitacion.options[selectHabitacion.selectedIndex];
 
-    // Obtener la capacidad máxima del atributo de datos
-    const maxHuespedes = parseInt(selectedOption.getAttribute('data-max-huespedes'));
+    // Obtener la capacidad máxima
+    const maxHuespedes = parseInt(selectedOption.getAttribute('data-max-huespedes')) || 0;
 
+    // Limpiar opciones anteriores
+    selectCantidad.innerHTML = '';
+    
     if (maxHuespedes > 0) {
-        // Establecer el límite máximo en el input y actualizar el placeholder
-        inputCantidad.max = maxHuespedes;
-        inputCantidad.placeholder = `Cantidad de huéspedes (Máx: ${maxHuespedes})`;
+        selectCantidad.disabled = false;
+        selectCantidad.innerHTML += '<option value="">Huéspedes</option>';
+        
+        // Crear opciones del 1 hasta la capacidad máxima
+        for (let i = 1; i <= maxHuespedes; i++) {
+            selectCantidad.innerHTML += `<option value="${i}">${i} Huésped${i > 1 ? 'es' : ''}</option>`;
+        }
     } else {
-        // Si no hay habitación seleccionada o capacidad no definida
-        inputCantidad.max = 99; // Restaurar un límite alto para no bloquear
-        inputCantidad.placeholder = 'Cantidad de noches/huéspedes';
+        selectCantidad.disabled = true;
+        selectCantidad.innerHTML += '<option value="">Seleccione habitación primero</option>';
     }
-    inputCantidad.value = 1; // Reseteamos a 1 para mayor claridad
 }
 
 
 // ------------------- Función: Cargar Reservas en Recepción -------------------
 async function cargarReservasRecepcion() {
     try {
-        // Consulta con JOIN implícito para obtener datos de Cliente y Habitación
+        // Consulta para obtener reservas junto con datos del cliente y habitación
         const { data: reservas, error } = await supabaseClient
             .from('reservas')
             .select(`
                 folio,
                 fecha_checkin,
                 fecha_checkout,
-                cantidad, // Ahora representa la cantidad de Huéspedes
+                cantidad, 
                 clientes (nombre, email), 
                 habitaciones (tipo)      
             `)
@@ -115,14 +119,13 @@ async function cargarReservasRecepcion() {
         const tbody = document.getElementById('tablaReservasBody');
         if (!tbody) return;
 
-        tbody.innerHTML = ''; // Limpiar tabla
+        tbody.innerHTML = ''; 
 
         if (reservas.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay reservas registradas.</td></tr>';
             return;
         }
 
-        // Rellenar la tabla
         reservas.forEach(r => {
             const row = tbody.insertRow();
             row.insertCell().textContent = r.folio;
@@ -149,34 +152,26 @@ async function hacerReserva(event) {
     const idHabitacion = parseInt(document.getElementById('habitacion').value);
     const fechaCheckin = document.getElementById('checkin').value;
     const fechaCheckout = document.getElementById('checkout').value;
-    // La 'cantidad' ahora representa los Huéspedes (y también 1 habitación, en este modelo)
+    // 'cantidad' es ahora el número de huéspedes (tomado del <select>)
     const cantidadHuespedes = parseInt(document.getElementById('cantidad').value); 
-    const cantidadHabitaciones = 1; // ASUMIMOS SOLO 1 HABITACIÓN POR RESERVA PARA ESTE MODELO
+    const cantidadHabitaciones = 1; // ASUMIMOS solo 1 habitación por reserva para este modelo
 
-    if (!idHabitacion) {
-        showFeedback("Seleccione un tipo de habitación.", true);
+    if (!idHabitacion || !cantidadHuespedes) {
+        showFeedback("Seleccione tipo de habitación y número de huéspedes.", true);
         return;
     }
 
-    // --- VALIDACIÓN DE CAPACIDAD (Limitamos a 1 habitación) ---
+    // --- VALIDACIÓN DE DISPONIBILIDAD ---
     const optionSeleccionada = document.querySelector(`#habitacion option[value="${idHabitacion}"]`);
     const disponible = parseInt(optionSeleccionada.getAttribute('data-disponible'));
-    const maxHuespedes = parseInt(optionSeleccionada.getAttribute('data-max-huespedes'));
 
     if (cantidadHabitaciones > disponible) {
         showFeedback(`Solo hay ${disponible} habitaciones disponibles para este tipo.`, true);
         return;
     }
-    
-    // Nueva validación: ¿Los huéspedes exceden la capacidad máxima de UNA habitación?
-    if (cantidadHuespedes > maxHuespedes) {
-        showFeedback(`El número de huéspedes (${cantidadHuespedes}) excede la capacidad máxima de esta habitación (${maxHuespedes}).`, true);
-        return;
-    }
-
 
     try {
-        // 1️⃣ Buscar o Crear Cliente (Mejora: Evitar duplicados)
+        // 1️⃣ Buscar o Crear Cliente
         let { data: cliente, error: clienteSearchError } = await supabaseClient
             .from('clientes')
             .select('id')
@@ -187,7 +182,7 @@ async function hacerReserva(event) {
         let idCliente;
 
         if (cliente) {
-            idCliente = cliente.id; // Cliente encontrado
+            idCliente = cliente.id; 
         } else {
             let { data: newCliente, error: clienteCreateError } = await supabaseClient
                 .from('clientes')
@@ -195,12 +190,11 @@ async function hacerReserva(event) {
                 .select('id')
                 .single();
             if (clienteCreateError) throw clienteCreateError;
-            idCliente = newCliente.id; // Cliente creado
+            idCliente = newCliente.id;
         }
 
         // 2️⃣ Crear reserva
         const folio = "RES" + Date.now();
-        // Usamos el campo 'cantidad' de la BD para guardar la cantidad de HUÉSPEDES
         let { error: reservaError } = await supabaseClient
             .from('reservas')
             .insert([{
@@ -209,12 +203,12 @@ async function hacerReserva(event) {
                 folio,
                 fecha_checkin: fechaCheckin,
                 fecha_checkout: fechaCheckout,
-                cantidad: cantidadHuespedes // Guardar los huéspedes
+                cantidad: cantidadHuespedes // Guardamos los huéspedes
             }]);
 
         if (reservaError) throw reservaError;
 
-        // 3️⃣ Actualizar disponibilidad (Restar 1 habitación, ya que la reserva es por 1)
+        // 3️⃣ Actualizar disponibilidad (Restar 1 habitación)
         const nuevaDisponibilidad = disponible - 1; 
 
         await supabaseClient
@@ -224,8 +218,9 @@ async function hacerReserva(event) {
 
         showFeedback("✅ Reserva realizada con éxito. Folio: " + folio);
         document.getElementById('formReserva').reset();
-        document.getElementById('cantidad').placeholder = 'Cantidad de noches/huéspedes'; // Resetear placeholder
-        cargarHabitaciones(); // Refrescar la lista
+        document.getElementById('cantidad').disabled = true; // Deshabilitar después de reset
+        generarSelectorHuespedes(); // Limpiar y deshabilitar el selector de huéspedes
+        cargarHabitaciones(); 
 
     } catch (err) {
         console.error("Error haciendo reserva:", err.message);
@@ -233,22 +228,27 @@ async function hacerReserva(event) {
     }
 }
 
-// ------------------- Inicializar (Adaptado a ambas páginas) -------------------
+// ------------------- Inicializar -------------------
 function init() {
     const isReservaPage = document.getElementById('formReserva');
     const isRecepcionPage = document.getElementById('tablaReservasBody');
 
     if (isReservaPage) {
-        // Lógica de la página de reservas (index.HTML)
+        // Lógica para index.HTML
         cargarHabitaciones();
-        // Listener para actualizar el límite de huéspedes al cambiar la habitación
-        document.getElementById('habitacion').addEventListener('change', actualizarLimiteHuespedes);
+        
+        // Listener para actualizar el selector de huéspedes al cambiar la habitación
+        document.getElementById('habitacion').addEventListener('change', generarSelectorHuespedes);
+        
+        // Configuración inicial del selector de huéspedes
+        document.getElementById('cantidad').innerHTML = '<option value="">Seleccione habitación primero</option>';
+        document.getElementById('cantidad').disabled = true;
         
         isReservaPage.addEventListener('submit', hacerReserva);
     } 
     
     if (isRecepcionPage) {
-        // Lógica de la página de recepción (recepcion.HTML)
+        // Lógica para recepcion.HTML
         cargarReservasRecepcion();
     }
 }
