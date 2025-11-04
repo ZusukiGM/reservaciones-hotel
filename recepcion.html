@@ -4,24 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recepción - Reservas</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos base (tomados de tu index.HTML) */
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f1f1;
+        }
+
+        header {
+            background: #004c70;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        header img {
+            width: 80px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 1200px; /* Más ancho para la tabla */
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* --- Estilos para la Tabla y Búsqueda --- */
+
+        /* Contenedor de búsqueda */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        /* Botón de volver */
+        .container > button {
+            display: block;
+            width: 150px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #3498db; 
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .container > button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        thead tr {
+            background-color: #004c70;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Estilo para mensajes de la tabla (N/A o Error) */
+        #tablaReservasBody td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Reservas Registradas</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Folio</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Habitación</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody id="tablaReservasBody"></tbody>
-    </table>
+    <header>
+        <img src="https://www.utbb.edu.mx/wp-content/uploads/2021/05/logo-utbb.png" alt="Logo UTBB">
+        <h1>Hotel Gran Nayar - Reservas Registradas</h1>
+    </header>
+
+    <div class="container">
+        <button onclick="location.href='index.HTML'">Volver a Reservar</button>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre o Email..." onkeyup="filtrarReservas()">
+        </div>
+
+        <table id="tablaReservas">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Habitación</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Huéspedes</th> </tr>
+            </thead>
+            <tbody id="tablaReservasBody">
+                </tbody>
+        </table>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
