@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservaciones Hotel Gran Nayar</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style.css"> 
+</head>
 <body>
     <header>
         <img src="https://www.grannayar.com.mx/wp-content/uploads/2021/05/Logo-Gran-Nayar-Blanco.png" alt="Logo Hotel Gran Nayar">
@@ -14,16 +15,19 @@
     <div class="container">
         <button onclick="location.href='recepcion.html'">Ir a Recepción</button>
 
+        <h2>Habitaciones Disponibles</h2>
         <div id="habitaciones">
             </div>
 
-        <hr>
-
-        <h2>Realizar Reserva</h2>
+        <hr> <h2>Realizar Nueva Reserva</h2>
         <form id="formReserva">
+            <label for="nombre">Nombre completo:</label>
             <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+            <label for="email">Correo electrónico:</label>
             <input type="email" id="email" placeholder="Correo electrónico" required>
             
+            <label for="habitacion">Tipo de Habitación:</label>
             <select id="habitacion" required>
                 <option value="">Seleccione tipo de habitación...</option>
             </select>
@@ -34,11 +38,14 @@
             <label for="checkout">Fecha de salida:</label>
             <input type="date" id="checkout" required>
 
-            <input type="number" id="cantidad" placeholder="Cantidad de noches/huéspedes" min="1" required>
+            <label for="cantidad">Cantidad de huéspedes:</label>
+            <select id="cantidad" required disabled>
+                 <option value="">Seleccione habitación primero</option>
+            </select>
             
             <button type="submit">Reservar Ahora</button>
         </form>
-    </div>
+        <p id="feedbackMessage"></p> </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
