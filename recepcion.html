@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepción - Reservas Registradas</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <h1 id="header-title">Hotel Gran Nayar - Reservas Registradas</h1>
+    </header>
+    
+    <div class="container" id="recepcion-container">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <button onclick="location.href='index.html'" class="recepcion-btn back-btn">Volver a Reservar</button>
+
+        </div>
+
+        <div class="filter-container">
+            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre o Email...">
+            <button id="searchBtn" class="recepcion-btn search-btn">Buscar</button>
+            <button id="clearBtn" class="recepcion-btn clear-btn">Borrar Filtro</button>
+        </div>
+
+        
+        <div id="authContent">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Habitación</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Huésperdes</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaReservasBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
