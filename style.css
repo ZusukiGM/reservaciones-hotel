@@ -7,64 +7,70 @@
 body {
     margin: 0;
     background: #f1f1f1; /* Fondo muy claro */
+    line-height: 1.6;
+    color: #333;
 }
 
 /* ------------------- Encabezado (Header) ------------------- */
 header {
     background: #004c70; /* Azul oscuro corporativo */
-    color: white; /* Color de texto base del header */
+    color: white; 
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem 1rem; /* Más padding vertical */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex; /* Usar flexbox para centrar contenido */
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: center;
 }
 
 header img {
     /* Ajustes para el logo */
-    width: 150px; /* Tamaño un poco más grande para el logo del hotel */
+    width: 200px; /* Tamaño un poco más grande y claro para el logo del hotel */
     height: auto;
-    vertical-align: middle;
-    margin-right: 10px;
-    filter: brightness(0) invert(1); /* Hace que las imágenes oscuras se vean blancas (útil si el logo es oscuro) */
+    margin-bottom: 10px; /* Espacio entre el logo y el título */
+    /* filter: brightness(0) invert(1); */ /* Eliminar si el logo ya es blanco o claro */
 }
 
 /* Título dentro del encabezado debe ser blanco */
 header h1 {
     color: white !important; 
-    margin: 5px 0 0 0; /* Ajuste para centrar debajo del logo */
-    font-size: 1.8rem;
+    margin: 0; 
+    font-size: 2.2rem; /* Tamaño de fuente más grande */
+    font-weight: bold;
 }
 
 h1, h2 {
     text-align: center;
-    color: #333; /* Color oscuro para los h1/h2 fuera del header */
-    margin-top: 0;
-    margin-bottom: 15px;
+    color: #333; 
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 /* ------------------- Contenedor Principal ------------------- */
 .container {
-    max-width: 1000px; 
+    max-width: 1100px; /* Un poco más ancho para mejor visualización */
     margin: 30px auto;
     background: white;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    padding: 30px; /* Más padding interno */
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra más suave */
 }
 
 /* ------------------- Botones Comunes y de Navegación ------------------- */
 .container > button {
     width: 100%; 
-    max-width: 250px; 
+    max-width: 280px; /* Botones de navegación un poco más grandes */
     display: block;
-    padding: 10px;
-    margin: 0 auto 20px; 
+    padding: 12px; /* Más padding */
+    margin: 0 auto 30px; /* Centrar y más margen inferior */
     background-color: #3498db; 
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px; /* Bordes más suaves */
     cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
+    font-size: 17px; /* Fuente un poco más grande */
+    transition: background 0.3s ease;
 }
 
 .container > button:hover {
@@ -75,19 +81,39 @@ h1, h2 {
 #formReserva {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 450px; 
-    margin: 20px auto 0;
-    padding: 15px;
+    gap: 18px; /* Más espacio entre elementos del formulario */
+    max-width: 500px; /* Ancho cómodo para el formulario */
+    margin: 30px auto 0; /* Más margen arriba */
+    padding: 25px; /* Más padding */
     border: 1px solid #e0e0e0;
     border-radius: 8px;
+    background-color: #fcfcfc;
 }
 
-#formReserva input, #formReserva select {
-    padding: 10px;
+#formReserva label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; /* Para que ocupen su propia línea */
+}
+
+#formReserva input[type="text"], 
+#formReserva input[type="email"], 
+#formReserva input[type="date"],
+#formReserva select {
+    width: 100%; /* Ocupar todo el ancho disponible */
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+#formReserva input:focus, #formReserva select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 #formReserva button[type="submit"] {
@@ -95,33 +121,84 @@ h1, h2 {
     color: white;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
-    padding: 12px;
+    transition: background 0.3s ease;
+    padding: 14px; /* Botón de submit más grande */
+    border-radius: 6px;
+    font-size: 18px;
+    margin-top: 10px;
 }
 
 #formReserva button[type="submit"]:hover {
     background-color: #e67e22;
 }
 
+/* Mensajes de feedback */
+#feedbackMessage {
+    text-align: center; 
+    margin-top: 20px; 
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+#feedbackMessage[style*="color: red"] {
+    background-color: #ffe0e0;
+    border: 1px solid #f00;
+}
+#feedbackMessage[style*="color: green"] {
+    background-color: #e0ffe0;
+    border: 1px solid #0f0;
+}
+
+
 /* ------------------- Lista de Habitaciones (index.HTML) ------------------- */
 #habitaciones {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+    gap: 25px; /* Más espacio entre tarjetas */
+    margin-bottom: 40px; /* Más margen inferior */
+    padding-top: 20px; /* Espacio antes de la sección */
 }
 
 #habitaciones div {
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
-    background: #fcfcfc;
-    transition: box-shadow 0.2s;
+    border: 1px solid #ddd;
+    padding: 20px; /* Más padding */
+    border-radius: 10px; /* Bordes más redondeados */
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Sombra más pronunciada */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
 }
 
 #habitaciones div:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-5px); /* Efecto "levantar" al pasar el ratón */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
+
+#habitaciones h3 {
+    color: #004c70;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+#habitaciones p {
+    margin: 5px 0;
+    color: #666;
+}
+
+#habitaciones p:last-child {
+    font-weight: bold;
+    color: #f39c12; /* Color para la disponibilidad */
+}
+
+/* Línea divisoria */
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px auto; /* Centrar y dar espacio */
+    width: 80%;
+}
+
 
 /* ------------------- Búsqueda (recepcion.HTML) ------------------- */
 .search-container {
