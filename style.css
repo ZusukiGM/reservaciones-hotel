@@ -59,7 +59,7 @@ hr {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     display: block; /* Ocupa todo el ancho */
     width: 100%;
@@ -112,7 +112,7 @@ hr {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 #formReserva label {
@@ -171,4 +171,5 @@ tr:nth-child(even) {
         padding: 15px;
     }
 }
+
 
