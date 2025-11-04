@@ -13,7 +13,7 @@
     </header>
 
     <div class="container">
-        <button onclick="location.href='recepcion.html'">Ir a Recepción</button>
+        <button onclick="location.href='recepcion.html'" class="main-button">Ir a Recepción</button>
 
         <h2>Habitaciones Disponibles</h2>
         
@@ -26,15 +26,12 @@
 
         <h2>Realizar Nueva Reserva</h2>
         <form id="formReserva">
-            <label for="nombre">Nombre completo:</label>
             <input type="text" id="nombre" placeholder="Nombre completo" required>
-
-            <label for="email">Correo electrónico:</label>
             <input type="email" id="email" placeholder="Correo electrónico" required>
             
             <label for="habitacion">Tipo de Habitación:</label>
             <select id="habitacion" required>
-                <option value="">Seleccione tipo de habitación...</option>
+                <option value="" data-capacidad="0">Seleccione tipo de habitación...</option>
             </select>
             
             <label for="checkin">Fecha de llegada:</label>
@@ -44,7 +41,9 @@
             <input type="date" id="checkout" required>
 
             <label for="cantidad">Cantidad de huéspedes:</label>
-            <input type="number" id="cantidad" placeholder="1 Huésped" min="1" required> 
+            <select id="cantidad" required>
+                <option value="">Seleccione cantidad de huéspedes...</option>
+            </select>
             
             <button type="submit">Reservar Ahora</button>
         </form>
