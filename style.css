@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    background: #f1f1f1; /* Fondo muy claro */
+    background: #f1f1f1; 
     line-height: 1.6;
     color: #333;
 }
@@ -16,27 +16,25 @@ header {
     background: #004c70; /* Azul oscuro corporativo */
     color: white; 
     text-align: center;
-    padding: 1.5rem 1rem; /* Más padding vertical */
+    padding: 1.5rem 1rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    display: flex; /* Usar flexbox para centrar contenido */
-    flex-direction: column; /* Apilar elementos verticalmente */
-    align-items: center; /* Centrar horizontalmente */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; /* Centrar logo y texto */
     justify-content: center;
 }
 
 header img {
-    /* Ajustes para el logo */
-    width: 200px; /* Tamaño un poco más grande y claro para el logo del hotel */
+    /* Estilos para tu archivo local LogoGranNayar.png */
+    width: 200px; /* Tamaño un poco más grande para el logo */
     height: auto;
-    margin-bottom: 10px; /* Espacio entre el logo y el título */
-    /* filter: brightness(0) invert(1); */ /* Eliminar si el logo ya es blanco o claro */
+    margin-bottom: 10px; 
 }
 
-/* Título dentro del encabezado debe ser blanco */
 header h1 {
-    color: white !important; 
+    color: white !important; /* Letras blancas para el título */
     margin: 0; 
-    font-size: 2.2rem; /* Tamaño de fuente más grande */
+    font-size: 2.2rem; 
     font-weight: bold;
 }
 
@@ -49,128 +47,67 @@ h1, h2 {
 
 /* ------------------- Contenedor Principal ------------------- */
 .container {
-    max-width: 1100px; /* Un poco más ancho para mejor visualización */
+    max-width: 1100px;
     margin: 30px auto;
     background: white;
     border-radius: 10px;
-    padding: 30px; /* Más padding interno */
-    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra más suave */
+    padding: 30px; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); 
 }
 
 /* ------------------- Botones Comunes y de Navegación ------------------- */
 .container > button {
     width: 100%; 
-    max-width: 280px; /* Botones de navegación un poco más grandes */
+    max-width: 280px; 
     display: block;
-    padding: 12px; /* Más padding */
-    margin: 0 auto 30px; /* Centrar y más margen inferior */
-    background-color: #3498db; 
+    padding: 12px;
+    margin: 0 auto 30px; 
+    background-color: #f39c12; /* Naranja/Amarillo */
     color: white;
     border: none;
-    border-radius: 6px; /* Bordes más suaves */
+    border-radius: 6px; 
     cursor: pointer;
-    font-size: 17px; /* Fuente un poco más grande */
+    font-size: 17px; 
+    font-weight: bold;
     transition: background 0.3s ease;
 }
 
 .container > button:hover {
-    background-color: #2980b9;
-}
-
-/* ------------------- Diseño del Formulario (index.HTML) ------------------- */
-#formReserva {
-    display: flex;
-    flex-direction: column;
-    gap: 18px; /* Más espacio entre elementos del formulario */
-    max-width: 500px; /* Ancho cómodo para el formulario */
-    margin: 30px auto 0; /* Más margen arriba */
-    padding: 25px; /* Más padding */
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #fcfcfc;
-}
-
-#formReserva label {
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 5px;
-    display: block; /* Para que ocupen su propia línea */
-}
-
-#formReserva input[type="text"], 
-#formReserva input[type="email"], 
-#formReserva input[type="date"],
-#formReserva select {
-    width: 100%; /* Ocupar todo el ancho disponible */
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: #fff;
-    transition: border-color 0.2s;
-}
-
-#formReserva input:focus, #formReserva select:focus {
-    border-color: #3498db;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-#formReserva button[type="submit"] {
-    background-color: #f39c12; 
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
-    padding: 14px; /* Botón de submit más grande */
-    border-radius: 6px;
-    font-size: 18px;
-    margin-top: 10px;
-}
-
-#formReserva button[type="submit"]:hover {
     background-color: #e67e22;
 }
 
-/* Mensajes de feedback */
-#feedbackMessage {
-    text-align: center; 
-    margin-top: 20px; 
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-}
-#feedbackMessage[style*="color: red"] {
-    background-color: #ffe0e0;
-    border: 1px solid #f00;
-}
-#feedbackMessage[style*="color: green"] {
-    background-color: #e0ffe0;
-    border: 1px solid #0f0;
-}
 
-
-/* ------------------- Lista de Habitaciones (index.HTML) ------------------- */
+/* ------------------- Lista de Habitaciones (index.HTML) - Cuadrícula ------------------- */
 #habitaciones {
+    /* Cuadrícula de 3 columnas para habitaciones (para que Suite Deluxe quede centrado si hay 4) */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
-    gap: 25px; /* Más espacio entre tarjetas */
-    margin-bottom: 40px; /* Más margen inferior */
-    padding-top: 20px; /* Espacio antes de la sección */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    margin-bottom: 40px; 
+    padding-top: 20px; 
+    /* Contenedor extra para centrar Suite Deluxe */
 }
+/* Estilo para que las tarjetas de habitación se centren */
+#habitaciones-wrapper {
+    display: flex;
+    justify-content: center; /* Centra las filas de habitaciones */
+}
+/* Asegura que el contenedor #habitaciones esté dentro de #habitaciones-wrapper si hay menos de 3 columnas */
+
 
 #habitaciones div {
     border: 1px solid #ddd;
-    padding: 20px; /* Más padding */
-    border-radius: 10px; /* Bordes más redondeados */
+    padding: 20px; 
+    border-radius: 10px; 
     background: #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Sombra más pronunciada */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-align: center;
+    height: 100%;
 }
 
 #habitaciones div:hover {
-    transform: translateY(-5px); /* Efecto "levantar" al pasar el ratón */
+    transform: translateY(-5px); 
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
@@ -181,26 +118,69 @@ h1, h2 {
     font-size: 1.4rem;
 }
 
-#habitaciones p {
-    margin: 5px 0;
-    color: #666;
-}
-
 #habitaciones p:last-child {
     font-weight: bold;
-    color: #f39c12; /* Color para la disponibilidad */
+    color: #f39c12; 
 }
 
 /* Línea divisoria */
 hr {
     border: none;
     border-top: 1px solid #eee;
-    margin: 40px auto; /* Centrar y dar espacio */
+    margin: 40px auto; 
     width: 80%;
 }
 
 
-/* ------------------- Búsqueda (recepcion.HTML) ------------------- */
+/* ------------------- Diseño del Formulario (index.HTML) ------------------- */
+#formReserva {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; 
+    max-width: 500px; 
+    margin: 30px auto 0; 
+    padding: 25px; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+#formReserva label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; 
+}
+
+#formReserva input, #formReserva select {
+    width: 100%; 
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+#formReserva button[type="submit"] {
+    background-color: #004c70; 
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    padding: 14px; 
+    border-radius: 6px;
+    font-size: 18px;
+    margin-top: 10px;
+    border: none;
+}
+
+#formReserva button[type="submit"]:hover {
+    background-color: #006a97;
+}
+
+/* ------------------- Búsqueda y Tabla (recepcion.HTML) ------------------- */
+
 .search-container {
     margin-bottom: 25px;
     display: flex; 
@@ -234,19 +214,10 @@ hr {
     background-color: #28a745; 
 }
 
-#buscarBtn:hover {
-    background-color: #218838;
-}
-
 #borrarFiltroBtn {
     background-color: #dc3545; 
 }
 
-#borrarFiltroBtn:hover {
-    background-color: #c82333;
-}
-
-/* ------------------- Estilos de la Tabla (recepcion.HTML) ------------------- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -265,15 +236,6 @@ thead tr {
     background-color: #004c70;
     color: white;
 }
-
-tbody tr:nth-child(even) {
-    background-color: #f8f8f8;
-}
-
-tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
 tbody td {
     text-align: center;
 }
