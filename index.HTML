@@ -130,7 +130,9 @@
             <label for="checkout">Fecha de salida:</label>
             <input type="date" id="checkout" required>
 
-            <input type="number" id="cantidad" placeholder="Cantidad de noches/huéspedes" min="1" required>
+            <select id="cantidad" required disabled>
+                 <option value="">Seleccione habitación primero</option>
+            </select>
             
             <button type="submit">Reservar Ahora</button>
         </form>
