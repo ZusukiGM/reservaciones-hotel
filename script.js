@@ -185,11 +185,6 @@ async function hacerReserva(event) {
 function renderReservas(reservas, tablaBody) {
     tablaBody.innerHTML = '';
     
-    if (reservas.length === 0) {
-        tablaBody.innerHTML = '<tr><td colspan="7">No se encontraron reservas.</td></tr>';
-        return;
-    }
-
     reservas.forEach(r => {
         const clienteNombre = r.clientes ? r.clientes.nombre : 'N/A';
         const clienteEmail = r.clientes ? r.clientes.email : 'N/A';
@@ -207,9 +202,14 @@ function renderReservas(reservas, tablaBody) {
             </tr>
         `;
     });
+
+    if (reservas.length === 0) {
+        tablaBody.innerHTML = '<tr><td colspan="7">No se encontraron reservas.</td></tr>';
+    }
 }
 
 // ------------------- Función: Cargar reservas en Recepción (recepcion.HTML) -------------------
+// Recibe un término de búsqueda opcional
 async function cargarReservasRecepcion(searchTerm = '') {
     const tablaBody = document.getElementById('tablaReservasBody');
     if (!tablaBody) return; 
@@ -234,9 +234,11 @@ async function cargarReservasRecepcion(searchTerm = '') {
         
         let reservasToRender = allReservas;
 
+        // APLICAR FILTRO en el frontend
         if (searchTerm) {
             const term = searchTerm.toLowerCase();
             
+            // Filtrar los datos recibidos
             reservasToRender = allReservas.filter(r => {
                 const nombre = r.clientes?.nombre?.toLowerCase() || '';
                 const email = r.clientes?.email?.toLowerCase() || '';
@@ -256,6 +258,7 @@ async function cargarReservasRecepcion(searchTerm = '') {
 
 
 // ------------------- FUNCIONES DE CONTROL DE FILTRO -------------------
+
 function handleSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput ? searchInput.value.trim() : '';
@@ -270,92 +273,7 @@ function handleClearFilter() {
     cargarReservasRecepcion(''); // Recarga la tabla sin filtro
 }
 
-
-// ------------------- LÓGICA DE LOGIN Y LOGOUT -------------------
-
-// Función para manejar el login
-async function handleLogin(event) {
-    event.preventDefault();
-
-    const emailInput = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
-    const loginFeedback = document.getElementById('loginFeedback');
-
-    if (!emailInput || !passwordInput || !loginFeedback) return;
-
-    const email = emailInput.value;
-    const password = passwordInput.value;
-
-    loginFeedback.style.color = 'gray';
-    loginFeedback.textContent = 'Iniciando sesión...';
-    
-    try {
-        const { error } = await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password,
-        });
-
-        if (error) {
-            loginFeedback.style.color = 'red';
-            loginFeedback.textContent = `Error: ${error.message}`;
-            console.error("Login error:", error.message);
-            return;
-        }
-
-        loginFeedback.style.color = 'green';
-        loginFeedback.textContent = '¡Acceso concedido! Redirigiendo...';
-        window.location.href = 'recepcion.HTML';
-
-    } catch (err) {
-        loginFeedback.style.color = 'red';
-        loginFeedback.textContent = 'Ocurrió un error inesperado al conectar.';
-        console.error("Unhandled login error:", err);
-    }
-}
-
-// Función para manejar el logout
-async function handleLogout() {
-    try {
-        const { error } = await supabaseClient.auth.signOut();
-        if (error) throw error;
-        alert('Sesión cerrada correctamente.');
-        window.location.href = 'login.HTML'; // Redirige al login
-    } catch (err) {
-        console.error("Error al cerrar sesión:", err.message);
-        alert('No se pudo cerrar la sesión: ' + err.message);
-    }
-}
-
-// Función para verificar el estado de autenticación y proteger rutas
-async function checkAuthAndProtectRoute() {
-    const { data: { user } } = await supabaseClient.auth.getUser();
-    const authContent = document.getElementById('authContent');
-    const authMessage = document.getElementById('authMessage');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const filterContainer = document.querySelector('.filter-container'); // También ocultar el filtro si no hay auth
-
-    if (!authContent || !authMessage) return;
-
-    if (user) {
-        // Usuario autenticado, mostrar contenido
-        authContent.style.display = 'block';
-        if (filterContainer) filterContainer.style.display = 'flex'; // Mostrar el filtro
-        authMessage.textContent = '';
-        cargarReservasRecepcion(); // Cargar datos
-        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout); // Añadir listener de logout
-    } else {
-        // No autenticado, ocultar contenido y mostrar mensaje
-        authContent.style.display = 'none';
-        if (filterContainer) filterContainer.style.display = 'none'; // Ocultar el filtro
-        authMessage.style.color = 'red';
-        authMessage.textContent = 'Acceso denegado. Por favor, inicie sesión.';
-        // Opcional: Redirigir directamente a login si no está autenticado
-        // window.location.href = 'login.html';
-    }
-}
-
-
-// ------------------- Inicializar -------------------
+// ------------------- Inicializar (Listener de Recepción) -------------------
 document.addEventListener('DOMContentLoaded', () => {
     // Si estamos en la página de reservas (index.HTML)
     if (document.getElementById('habitaciones')) {
@@ -364,18 +282,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const formReserva = document.getElementById('formReserva');
         if (formReserva) formReserva.addEventListener('submit', hacerReserva);
     }
-    // Si estamos en la página de login (login.HTML)
-    else if (document.getElementById('loginForm')) {
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) loginForm.addEventListener('submit', handleLogin);
-    }
     // Si estamos en la página de recepción (recepcion.HTML)
-    else if (document.getElementById('tablaReservasBody')) {
-        checkAuthAndProtectRoute(); // Proteger la ruta de recepción
+    if (document.getElementById('tablaReservasBody')) {
+        cargarReservasRecepcion();
         
         const searchBtn = document.getElementById('searchBtn');
         const clearBtn = document.getElementById('clearBtn');
         
+        // Asignar listeners a los botones de filtro
         if (searchBtn) {
             searchBtn.addEventListener('click', handleSearch);
         }
