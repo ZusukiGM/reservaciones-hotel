@@ -1,103 +1,202 @@
-/* --- Nuevo Estilo: Contenedor del Logo/Título --- */
+/* ------------------- Estilos Globales y de Base ------------------- */
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f1f1f1; /* Fondo muy claro */
+    line-height: 1.6;
+    color: #333;
+}
+
+/* ------------------- Encabezado (Header) ------------------- */
 header {
-    /* ... estilos existentes ... */
-    background: #004c70; 
+    background: #004c70; /* Azul oscuro corporativo */
     color: white; 
     text-align: center;
     padding: 1.5rem 1rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    /* Se convierte en un contenedor flexible */
-    display: flex; 
-    flex-direction: column; 
+    display: flex; /* Usar flexbox */
+    flex-direction: column; /* Apilar elementos (logo y título) */
     align-items: center; 
-    justify-content: center;
-}
-
-#logo-recepcion-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer; /* Indica que es clickeable */
-    padding: 5px;
-    border-radius: 5px;
-    transition: background 0.2s;
-}
-
-#logo-recepcion-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
 }
 
 header img {
-    width: 100px; /* Tamaño del logo */
+    /* Estilos para tu archivo local LogoGranNayar.png */
+    width: 200px; 
     height: auto;
-    margin-bottom: 5px; 
-}
-/*--------------------------------------------------*/
-
-
-/* ------------------- Estilos del Modal ------------------- */
-.modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; 
-    z-index: 1000; /* Siempre encima de todo */
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); /* Fondo negro semi-transparente */
-    padding-top: 60px;
+    margin-bottom: 10px; 
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto; /* 5% arriba y centrado */
-    padding: 30px;
-    border: 1px solid #888;
-    width: 90%; 
-    max-width: 400px; /* Ancho máximo para el formulario */
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+header h1 {
+    color: white !important; 
+    margin: 0; 
+    font-size: 2.2rem; 
     font-weight: bold;
 }
 
-.close-btn:hover,
-.close-btn:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+h1, h2 {
+    text-align: center;
+    color: #333; 
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
-#loginForm {
+/* ------------------- Contenedor Principal ------------------- */
+.container {
+    max-width: 1100px; /* Un poco más ancho para la cuadrícula */
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
+    padding: 30px; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); 
+}
+
+/* ------------------- Botones Principales y de Navegación ------------------- */
+.main-button {
+    width: 100%; 
+    max-width: 280px; 
+    display: block;
+    padding: 12px;
+    margin: 0 auto 30px; 
+    background-color: #f39c12; /* Naranja/Amarillo (para el botón de ir a recepción) */
+    color: white;
+    border: none;
+    border-radius: 6px; 
+    cursor: pointer;
+    font-size: 17px; 
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.main-button:hover {
+    background-color: #e67e22;
+}
+
+
+/* ------------------- Lista de Habitaciones (index.HTML) - Diseño en Cuadrícula ------------------- */
+#habitaciones-wrapper {
+    /* Contenedor que centra la cuadrícula si no está llena */
+    display: flex;
+    justify-content: center;
+}
+
+#habitaciones {
+    /* Cuadrícula de 3 columnas responsiva. Se ajusta automáticamente. */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    width: 100%; /* Asegura que la cuadrícula ocupe el espacio */
+    max-width: 900px; /* Limita el ancho de la cuadrícula a 3 columnas */
+}
+
+#habitaciones div {
+    border: 1px solid #ddd;
+    padding: 20px; 
+    border-radius: 10px; 
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+    height: 100%;
+}
+
+#habitaciones div:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+#habitaciones h3 {
+    color: #004c70; /* Títulos de habitación en azul corporativo */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+#habitaciones p:last-child {
+    font-weight: bold;
+    color: #f39c12; /* Resaltar la disponibilidad */
+}
+
+/* Línea divisoria */
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px auto; 
+    width: 80%;
+}
+
+
+/* ------------------- Diseño del Formulario (index.HTML) ------------------- */
+#formReserva {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px; 
+    max-width: 500px; 
+    margin: 30px auto 0; 
+    padding: 25px; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fcfcfc;
 }
 
-#loginForm input, #loginForm button {
-    padding: 10px;
+#formReserva label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; 
+}
+
+#formReserva input, #formReserva select {
+    width: 100%; 
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.2s;
 }
 
-#loginForm button {
-    background-color: #f39c12; /* Color de contraste */
+#formReserva button[type="submit"] {
+    background-color: #004c70; 
     color: white;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    padding: 14px; 
+    border-radius: 6px;
+    font-size: 18px;
+    margin-top: 10px;
+    border: none;
 }
 
-#loginForm button:hover {
-    background-color: #e67e22;
+#formReserva button[type="submit"]:hover {
+    background-color: #006a97;
 }
-/*--------------------------------------------------*/
 
-/* Mantén los estilos para .container, #habitaciones, y el formulario #formReserva tal como estaban en tu versión anterior, y asegúrate de añadir las clases de cuadrícula que definimos previamente. */
+/* ------------------- Estilos para la tabla (recepcion.HTML) ------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+}
+
+thead tr {
+    background-color: #004c70;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
