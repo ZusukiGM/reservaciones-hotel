@@ -9,7 +9,7 @@
 <body>
     <header>
         <div id="logo-recepcion-btn">
-            <img src="https://www.utbb.edu.mx/wp-content/uploads/2021/05/logo-utbb.png" alt="Logo Hotel Gran Nayar" title="Acceso a Recepción">
+            <img src="LogoGranNayar.png" alt="Logo Hotel Gran Nayar" title="Acceso a Recepción">
             <h1>Hotel Gran Nayar - Reservaciones</h1>
         </div>
     </header>
@@ -18,7 +18,8 @@
         <h2>Habitaciones Disponibles</h2>
         
         <div id="habitaciones-wrapper">
-            <div id="habitaciones"></div>
+            <div id="habitaciones">
+                </div>
         </div>
 
         <hr> 
@@ -52,16 +53,13 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h3 style="text-align: center;">Acceso a Recepción</h3>
-            <p style="text-align: center; color: #555;">Solo para personal autorizado.</p>
+            <h3>Acceso a Recepción</h3>
+            <p>Solo para personal autorizado.</p>
             <form id="loginForm">
                 <input type="email" id="loginEmail" placeholder="Email de usuario" required>
                 <input type="password" id="loginPassword" placeholder="Contraseña" required>
-                <div class="modal-buttons">
-                    <button type="submit" class="ingresar-btn">Ingresar</button>
-                    <button type="button" class="cancelar-btn" onclick="document.getElementById('loginModal').style.display='none'">Cancelar</button>
-                </div>
-                <p id="loginFeedback"></p>
+                <button type="submit">Iniciar Sesión</button>
+                <p id="loginFeedback" style="color: red; margin-top: 10px;"></p>
             </form>
         </div>
     </div>
