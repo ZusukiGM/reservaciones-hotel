@@ -112,7 +112,7 @@ hr {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #formReserva label {
@@ -171,5 +171,6 @@ tr:nth-child(even) {
         padding: 15px;
     }
 }
+
 
 
