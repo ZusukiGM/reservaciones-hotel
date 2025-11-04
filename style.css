@@ -1,176 +1,74 @@
-/* Estilos Base */
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+/* ... Estilos anteriores de index.HTML ... */
 
-body {
-    margin: 0;
-    background: #f1f1f1;
-    color: #333;
-}
+/* --- Nuevos Estilos para Recepción (recepcion.HTML) --- */
 
-/* Encabezado */
-header {
-    background: #004c70; /* Azul oscuro elegante */
-    color: white;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+/* Contenedor del filtro */
+.filter-container {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-}
-
-header img {
-    width: 100px; 
-    height: auto;
-    margin-bottom: 5px; 
-}
-
-h1, h2 {
-    text-align: center;
-    color: #333;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: #ccc;
-    margin: 20px 0;
-}
-
-/* Contenedor principal */
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-    background: white;
-    border-radius: 10px;
-    padding: 20px 30px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-}
-
-/* Botón "Ir a Recepción" (restaurado) */
-.main-button {
-    background-color: #f39c12; /* Color de contraste/resaltado */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    display: block; /* Ocupa todo el ancho */
-    width: 100%;
+    gap: 10px;
+    align-items: center;
     margin-bottom: 20px;
-    transition: background 0.3s;
 }
 
-.main-button:hover {
-    background-color: #e67e22;
-}
-
-/* Cuadrícula de Habitaciones */
-#habitaciones-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-#habitaciones {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    width: 100%;
-}
-
-#habitaciones div {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-#habitaciones h3 {
-    color: #004c70;
-    margin-top: 0;
-}
-
-/* Formulario */
-#formReserva {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: 20px auto;
-    gap: 15px;
-}
-
-#formReserva input, 
-#formReserva select, 
-#formReserva button {
-    padding: 12px;
+#searchInput {
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
-#formReserva label {
+/* Botones de acción en Recepción */
+.recepcion-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
     font-weight: bold;
-    margin-top: 5px;
-    color: #555;
-}
-
-#formReserva button[type="submit"] {
-    background-color: #004c70;
     color: white;
-    font-weight: bold;
     cursor: pointer;
     transition: background 0.3s;
-    margin-top: 10px;
 }
 
-#formReserva button[type="submit"]:hover {
-    background-color: #003a55;
+/* Botón Volver a Reservar (Azul claro/cielo) */
+.back-btn {
+    background-color: #3498db; 
+}
+.back-btn:hover {
+    background-color: #2980b9;
 }
 
-#feedbackMessage {
-    text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
+/* Botón Buscar (Verde) */
+.search-btn {
+    background-color: #2ecc71; 
+}
+.search-btn:hover {
+    background-color: #27ae60;
 }
 
-/* Estilos de tabla para recepcion.HTML */
-table {
+/* Botón Borrar Filtro (Rojo/Borrar) */
+.clear-btn {
+    background-color: #e74c3c; 
+}
+.clear-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Estilos para la tabla (Mejora visual) */
+#recepcion-container table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
-
-th, td {
+#recepcion-container th, 
+#recepcion-container td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
-
-th {
-    background-color: #004c70;
+#recepcion-container th {
+    background-color: #004c70; 
     color: white;
-    font-weight: bold;
 }
-
-tr:nth-child(even) {
+#recepcion-container tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-
-/* Media Queries para responsividad */
-@media (max-width: 600px) {
-    .container {
-        margin: 10px;
-        padding: 15px;
-    }
-}
-
-
-
