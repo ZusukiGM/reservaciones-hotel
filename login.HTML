@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hotel Gran Nayar</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <h2>Acceso a Recepción</h2>
+        <form id="loginForm" class="login-form">
+            <input type="email" id="loginEmail" placeholder="Email de usuario" required>
+            <input type="password" id="loginPassword" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+            <p id="loginFeedback"></p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
