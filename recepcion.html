@@ -44,23 +44,6 @@
             color: #333;
         }
 
-        /* --- Estilos para la Tabla y Búsqueda --- */
-
-        /* Contenedor de búsqueda */
-        .search-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        #search-input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        
         /* Botón de volver */
         .container > button {
             display: block;
@@ -80,6 +63,54 @@
             background-color: #2980b9;
         }
 
+        /* --- Estilos para la Tabla y Búsqueda MEJORADA --- */
+
+        /* Contenedor de búsqueda, ahora más bonito */
+        .search-container {
+            margin-bottom: 25px;
+            display: flex; 
+            gap: 10px;
+            padding: 15px; 
+            background-color: #e9ecef; /* Fondo suave para destacar */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #searchInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-container button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        #buscarBtn {
+            background-color: #28a745; /* Verde para buscar */
+        }
+
+        #buscarBtn:hover {
+            background-color: #218838;
+        }
+
+        #borrarFiltroBtn {
+            background-color: #dc3545; /* Rojo para borrar/reset */
+        }
+
+        #borrarFiltroBtn:hover {
+            background-color: #c82333;
+        }
+        
         /* Estilos de la tabla */
         table {
             width: 100%;
@@ -105,7 +136,6 @@
             background-color: #f1f1f1;
         }
 
-        /* Estilo para mensajes de la tabla (N/A o Error) */
         #tablaReservasBody td {
             text-align: center;
         }
@@ -121,7 +151,11 @@
         <button onclick="location.href='index.HTML'">Volver a Reservar</button>
 
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre o Email..." onkeyup="filtrarReservas()">
+            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre de Cliente o Fecha de Check-in (YYYY-MM-DD)...">
+            
+            <button id="buscarBtn">🔎 Buscar</button> 
+            
+            <button id="borrarFiltroBtn">🗑️ Borrar Filtro</button> 
         </div>
 
         <table id="tablaReservas">
@@ -133,7 +167,8 @@
                     <th>Habitación</th>
                     <th>Check-in</th>
                     <th>Check-out</th>
-                    <th>Huéspedes</th> </tr>
+                    <th>Huéspedes</th> 
+                </tr>
             </thead>
             <tbody id="tablaReservasBody">
                 </tbody>
