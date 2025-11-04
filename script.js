@@ -5,12 +5,10 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ------------------- FUNCIÓN: Inicializar y Limitar Fechas (index.HTML) -------------------
+// ... (MANTÉN ESTA FUNCIÓN COMPLETA DEL PASO ANTERIOR) ...
 function inicializarFechas() {
     const checkinInput = document.getElementById('checkin');
     const checkoutInput = document.getElementById('checkout');
-    
-    if (!checkinInput || !checkoutInput) return; // Asegurar que estamos en index.HTML
-
     const today = new Date();
     
     const yyyy = today.getFullYear();
@@ -45,15 +43,12 @@ function inicializarFechas() {
     });
 }
 // ------------------- FUNCIÓN: Actualizar lista de huéspedes (index.HTML) -------------------
+// ... (MANTÉN ESTA FUNCIÓN COMPLETA DEL PASO ANTERIOR) ...
 function actualizarSelectHuespedes() {
     const selectHabitacion = document.getElementById('habitacion');
     const selectHuespedes = document.getElementById('cantidad');
-    
-    if (!selectHabitacion || !selectHuespedes) return;
-
     const selectedOption = selectHabitacion.options[selectHabitacion.selectedIndex];
     
-    // Obtener la capacidad máxima del atributo data-capacidad (cantidad_total en DB)
     const capacidad = parseInt(selectedOption.getAttribute('data-capacidad') || 0);
 
     selectHuespedes.innerHTML = '<option value="">Seleccione cantidad de huéspedes...</option>';
@@ -67,6 +62,7 @@ function actualizarSelectHuespedes() {
 }
 
 // ------------------- Función: Cargar habitaciones (index.HTML) -------------------
+// ... (MANTÉN ESTA FUNCIÓN COMPLETA DEL PASO ANTERIOR) ...
 async function cargarHabitaciones() {
     try {
         const { data: habitaciones, error } = await supabaseClient
@@ -78,14 +74,12 @@ async function cargarHabitaciones() {
 
         const contenedor = document.getElementById('habitaciones');
         const selectHabitacion = document.getElementById('habitacion');
-        
-        if (!contenedor || !selectHabitacion) return;
-
         contenedor.innerHTML = '';
         selectHabitacion.innerHTML = '<option value="" data-capacidad="0">Seleccione tipo de habitación...</option>'; 
 
         habitaciones.forEach(h => {
-            const capacidadMaxima = h.cantidad_total || 1; // Usamos cantidad_total
+            // Usamos 'cantidad_total' para la capacidad máxima de huéspedes
+            const capacidadMaxima = h.cantidad_total || 1;
             
             contenedor.innerHTML += `
                 <div>
@@ -97,7 +91,6 @@ async function cargarHabitaciones() {
             `;
 
             if (h.disponible > 0) {
-                // Se agrega el atributo data-capacidad para el select de huéspedes
                 selectHabitacion.innerHTML += `<option value="${h.id}" data-disponible="${h.disponible}" data-capacidad="${capacidadMaxima}">${h.tipo} (Máx: ${capacidadMaxima} pers.)</option>`;
             }
         });
@@ -107,12 +100,12 @@ async function cargarHabitaciones() {
         
     } catch (err) {
         console.error("Error cargando habitaciones:", err.message);
-        const feedback = document.getElementById('feedbackMessage');
-        if (feedback) feedback.textContent = "Error cargando habitaciones: " + err.message;
+        document.getElementById('feedbackMessage').textContent = "Error cargando habitaciones: " + err.message;
     }
 }
 
 // ------------------- Función: Hacer reserva (index.HTML) -------------------
+// ... (MANTÉN ESTA FUNCIÓN COMPLETA DEL PASO ANTERIOR) ...
 async function hacerReserva(event) {
     event.preventDefault();
 
@@ -122,7 +115,6 @@ async function hacerReserva(event) {
     const fechaCheckin = document.getElementById('checkin').value;
     const fechaCheckout = document.getElementById('checkout').value;
     const cantidad = parseInt(document.getElementById('cantidad').value); 
-    const feedback = document.getElementById('feedbackMessage');
 
     if (!idHabitacion || !cantidad) {
         alert("Seleccione una habitación y la cantidad de huéspedes.");
@@ -170,31 +162,32 @@ async function hacerReserva(event) {
             .update({ disponible: nuevaDisponibilidad })
             .eq('id', idHabitacion);
 
-        feedback.style.color = 'green';
-        feedback.textContent = "✅ Reserva realizada con éxito. Folio: " + folio;
+        document.getElementById('feedbackMessage').style.color = 'green';
+        document.getElementById('feedbackMessage').textContent = "✅ Reserva realizada con éxito. Folio: " + folio;
         document.getElementById('formReserva').reset();
         cargarHabitaciones(); 
 
     } catch (err) {
         console.error("Error haciendo reserva:", err.message);
-        feedback.style.color = 'red';
-        feedback.textContent = "❌ Ocurrió un error al realizar la reserva: " + err.message;
+        document.getElementById('feedbackMessage').style.color = 'red';
+        document.getElementById('feedbackMessage').textContent = "❌ Ocurrió un error al realizar la reserva: " + err.message;
     }
 }
 
 // ------------------- LÓGICA DE LOGIN Y MODAL -------------------
 
+// Referencias del DOM para el login
 const loginModal = document.getElementById('loginModal');
 const loginBtn = document.getElementById('logo-recepcion-btn');
 const closeBtn = document.querySelector('.close-btn');
 const loginForm = document.getElementById('loginForm');
 const loginFeedback = document.getElementById('loginFeedback');
 
-// Función para abrir el modal al hacer clic en el logo
+// Función para abrir el modal
 if (loginBtn) {
     loginBtn.onclick = function() {
-        loginModal.style.display = 'flex'; // Usamos 'flex' para el centrado CSS
-        if (loginFeedback) loginFeedback.textContent = ''; 
+        loginModal.style.display = 'block';
+        loginFeedback.textContent = ''; // Limpia mensajes de error anteriores
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
     }
@@ -221,41 +214,49 @@ async function handleLogin(event) {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
-    if (loginFeedback) loginFeedback.textContent = 'Iniciando sesión...';
+    loginFeedback.textContent = 'Iniciando sesión...';
     
     try {
-        // Usamos la autenticación de Supabase (debiste crear el usuario en el panel Auth)
-        const { error } = await supabaseClient.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: password,
         });
 
         if (error) {
-            if (loginFeedback) loginFeedback.textContent = `Error: Credenciales inválidas.`;
+            // Manejo de errores específicos de autenticación (Ej: "Invalid login credentials")
+            loginFeedback.textContent = `Error: ${error.message}`;
             console.error("Login error:", error.message);
             return;
         }
 
         // Si el login es exitoso
-        if (loginFeedback) loginFeedback.textContent = '¡Acceso concedido! Redirigiendo...';
+        loginFeedback.textContent = '¡Acceso concedido!';
         // Redirigir a la página de recepción
         window.location.href = 'recepcion.HTML';
 
     } catch (err) {
-        if (loginFeedback) loginFeedback.textContent = 'Ocurrió un error de conexión.';
+        loginFeedback.textContent = 'Ocurrió un error de conexión.';
         console.error("Unhandled login error:", err);
     }
 }
 
 // ------------------- Función: Cargar reservas en Recepción (recepcion.HTML) -------------------
+// ... (MANTÉN ESTA FUNCIÓN COMPLETA DEL PASO ANTERIOR) ...
 async function cargarReservasRecepcion() {
     const tablaBody = document.getElementById('tablaReservasBody');
-    if (!tablaBody) return; 
+    if (!tablaBody) return; // Asegura que solo se ejecuta en recepcion.HTML
     
+    // Opcional: Verificar si el usuario está logueado antes de mostrar datos
+    // const { data: { user } } = await supabaseClient.auth.getUser();
+    // if (!user) {
+    //     tablaBody.innerHTML = '<tr><td colspan="7">Acceso denegado. Por favor, inicie sesión.</td></tr>';
+    //     return;
+    // }
+
     tablaBody.innerHTML = '<tr><td colspan="7">Cargando reservas...</td></tr>';
 
     try {
-        // SELECT con JOIN para obtener el nombre del cliente y el TIPO actual de la habitación (solución a cambio de nombres)
+        // Hacemos un JOIN (select con JOIN) para obtener el nombre del cliente y el tipo de habitación.
         const { data: reservas, error } = await supabaseClient
             .from('reservas')
             .select(`
@@ -275,7 +276,6 @@ async function cargarReservasRecepcion() {
         reservas.forEach(r => {
             const clienteNombre = r.clientes ? r.clientes.nombre : 'N/A';
             const clienteEmail = r.clientes ? r.clientes.email : 'N/A';
-            // Usa el campo 'tipo' de la tabla 'habitaciones'
             const habitacionTipo = r.habitaciones ? r.habitaciones.tipo : 'ID: ' + r.id_habitacion;
 
             tablaBody.innerHTML += `
@@ -306,10 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si estamos en la página de reservas (index.HTML)
     if (document.getElementById('habitaciones')) {
         cargarHabitaciones();
-        inicializarFechas(); 
+        inicializarFechas(); // Limitar las fechas
         document.getElementById('formReserva').addEventListener('submit', hacerReserva);
-        
-        // Listener para el login
+        // Agregar el listener para el formulario de login
         if (loginForm) {
             loginForm.addEventListener('submit', handleLogin);
         }
