@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recepción - Reservas</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
     <header>
         <img src="LogoGranNayar.png" alt="Logo Hotel Gran Nayar">
         <h1>Hotel Gran Nayar - Reservas Registradas</h1>
     </header>
+    
+    <div class="container" id="recepcion-container">
+        
+        <button onclick="location.href='index.html'" class="recepcion-btn back-btn">Volver a Reservar</button>
 
-    <div class="container">
-        <button onclick="location.href='index.HTML'">Volver a Reservar</button>
-
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre o Check-in (YYYY-MM-DD)...">
-            <button id="buscarBtn">🔎 Buscar</button> 
-            <button id="borrarFiltroBtn">🗑️ Borrar Filtro</button> 
+        <div class="filter-container">
+            <input type="text" id="searchInput" placeholder="Buscar por Folio, Nombre o Email...">
+            <button id="searchBtn" class="recepcion-btn search-btn">Buscar</button>
+            <button id="clearBtn" class="recepcion-btn clear-btn">Borrar Filtro</button>
         </div>
 
-        <table id="tablaReservas">
+        <table>
             <thead>
                 <tr>
                     <th>Folio</th>
@@ -30,12 +31,12 @@
                     <th>Habitación</th>
                     <th>Check-in</th>
                     <th>Check-out</th>
-                    <th>Huéspedes</th> 
-                </tr>
+                    <th>Huésperdes</th> </tr>
             </thead>
             <tbody id="tablaReservasBody">
                 </tbody>
         </table>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
