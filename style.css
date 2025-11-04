@@ -1,86 +1,26 @@
-/* ... Estilos anteriores de index.HTML y recepcion.HTML ... */
-
-/* --- Estilos para la página de Login (login.HTML) --- */
-body.login-page {
-    background: url('foto.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Ocupa al menos el 100% del alto de la ventana */
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.login-container {
-    background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.login-container h2 {
-    color: #004c70;
-    margin-bottom: 25px;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.login-form input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.login-form button {
-    background-color: #f39c12; /* Naranja/Ámbar */
+/* Estilos en style.css para la cabecera */
+header {
+    background: #004c70; /* Azul oscuro elegante */
     color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.login-form button:hover {
-    background-color: #e67e22;
-}
-
-#loginFeedback {
-    margin-top: 15px;
-    font-weight: bold;
-    color: red; /* Para mensajes de error */
-}
-
-/* --- Estilos para la cabecera con link al Login (index.HTML y recepcion.HTML) --- */
-header a#header-link {
-    text-decoration: none; /* Quita el subrayado del enlace */
-    color: white; /* Hereda el color del header */
+    text-align: center;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    /* Las siguientes líneas aseguran que el contenido (el H1) esté centrado */
     display: flex;
     flex-direction: column; 
     align-items: center; 
     justify-content: center;
-    width: 100%; /* Para que ocupe todo el espacio clickeable */
-    padding: 1.5rem 1rem; /* Mantiene el padding del header */
 }
 
-header a#header-link:hover {
-    background: rgba(255, 255, 255, 0.1); /* Ligero hover effect */
+header img {
+    /* Si decides usar el logo, estas reglas lo estilizarán */
+    width: 100px; 
+    height: auto;
+    margin-bottom: 5px; 
 }
 
-header h1 {
-    color: white; /* Asegura que el título en el header sea blanco */
-    margin: 0; /* Elimina márgenes extra */
-    font-size: 2em; /* Ajusta el tamaño si es necesario */
+h1, h2 {
+    text-align: center;
+    color: white; /* Aseguramos que el H1 en el header sea blanco */
+    margin-top: 0;
 }
