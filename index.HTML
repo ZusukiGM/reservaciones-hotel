@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <img src="https://www.grannayar.com.mx/wp-content/uploads/2021/05/Logo-Gran-Nayar-Blanco.png" alt="Logo Hotel Gran Nayar">
+        <img src="LogoGranNayar.png" alt="Logo Hotel Gran Nayar">
         <h1>Hotel Gran Nayar - Reservaciones</h1>
     </header>
 
@@ -16,10 +16,15 @@
         <button onclick="location.href='recepcion.html'">Ir a Recepción</button>
 
         <h2>Habitaciones Disponibles</h2>
-        <div id="habitaciones">
-            </div>
+        
+        <div id="habitaciones-wrapper">
+            <div id="habitaciones">
+                </div>
+        </div>
 
-        <hr> <h2>Realizar Nueva Reserva</h2>
+        <hr> 
+
+        <h2>Realizar Nueva Reserva</h2>
         <form id="formReserva">
             <label for="nombre">Nombre completo:</label>
             <input type="text" id="nombre" placeholder="Nombre completo" required>
@@ -39,13 +44,12 @@
             <input type="date" id="checkout" required>
 
             <label for="cantidad">Cantidad de huéspedes:</label>
-            <select id="cantidad" required disabled>
-                 <option value="">Seleccione habitación primero</option>
-            </select>
+            <input type="number" id="cantidad" placeholder="1 Huésped" min="1" required> 
             
             <button type="submit">Reservar Ahora</button>
         </form>
-        <p id="feedbackMessage"></p> </div>
+        <p id="feedbackMessage"></p> 
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
