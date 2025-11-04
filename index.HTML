@@ -8,13 +8,13 @@
 </head>
 <body>
     <header>
-        <div id="logo-recepcion-btn">
-            <img src="LogoGranNayar.png" alt="Logo Hotel Gran Nayar" title="Acceso a Recepción">
-            <h1>Hotel Gran Nayar - Reservaciones</h1>
-        </div>
+        <img src="LogoGranNayar.png" alt="Logo Hotel Gran Nayar">
+        <h1>Hotel Gran Nayar - Reservaciones</h1>
     </header>
 
     <div class="container">
+        <button onclick="location.href='recepcion.html'" class="main-button">Ir a Recepción</button>
+
         <h2>Habitaciones Disponibles</h2>
         
         <div id="habitaciones-wrapper">
@@ -50,19 +50,6 @@
         <p id="feedbackMessage"></p> 
     </div>
 
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>Acceso a Recepción</h3>
-            <p>Solo para personal autorizado.</p>
-            <form id="loginForm">
-                <input type="email" id="loginEmail" placeholder="Email de usuario" required>
-                <input type="password" id="loginPassword" placeholder="Contraseña" required>
-                <button type="submit">Iniciar Sesión</button>
-                <p id="loginFeedback" style="color: red; margin-top: 10px;"></p>
-            </form>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 </body>
