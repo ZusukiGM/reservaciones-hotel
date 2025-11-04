@@ -12,29 +12,37 @@ body {
 /* ------------------- Encabezado (Header) ------------------- */
 header {
     background: #004c70; /* Azul oscuro corporativo */
-    color: white;
+    color: white; /* Color de texto base del header */
     text-align: center;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 header img {
-    width: 80px;
+    /* Ajustes para el logo */
+    width: 150px; /* Tamaño un poco más grande para el logo del hotel */
     height: auto;
     vertical-align: middle;
     margin-right: 10px;
+    filter: brightness(0) invert(1); /* Hace que las imágenes oscuras se vean blancas (útil si el logo es oscuro) */
+}
+
+/* Título dentro del encabezado debe ser blanco */
+header h1 {
+    color: white !important; 
+    margin: 5px 0 0 0; /* Ajuste para centrar debajo del logo */
+    font-size: 1.8rem;
 }
 
 h1, h2 {
     text-align: center;
-    color: #333;
+    color: #333; /* Color oscuro para los h1/h2 fuera del header */
     margin-top: 0;
     margin-bottom: 15px;
 }
 
 /* ------------------- Contenedor Principal ------------------- */
 .container {
-    /* Un tamaño intermedio que funciona bien para ambas páginas */
     max-width: 1000px; 
     margin: 30px auto;
     background: white;
@@ -44,14 +52,13 @@ h1, h2 {
 }
 
 /* ------------------- Botones Comunes y de Navegación ------------------- */
-/* Botón principal en index.HTML (Ir a Recepción) y botón de volver en recepcion.HTML */
 .container > button {
-    width: 100%; /* Por defecto en index.HTML */
-    max-width: 250px; /* Máximo en recepcion.HTML */
+    width: 100%; 
+    max-width: 250px; 
     display: block;
     padding: 10px;
-    margin: 0 auto 20px; /* Centrar y margen inferior */
-    background-color: #3498db; /* Azul estándar */
+    margin: 0 auto 20px; 
+    background-color: #3498db; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -69,7 +76,7 @@ h1, h2 {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    max-width: 450px; /* Ancho cómodo para el formulario */
+    max-width: 450px; 
     margin: 20px auto 0;
     padding: 15px;
     border: 1px solid #e0e0e0;
@@ -84,7 +91,7 @@ h1, h2 {
 }
 
 #formReserva button[type="submit"] {
-    background-color: #f39c12; /* Naranja/Amarillo para acción principal */
+    background-color: #f39c12; 
     color: white;
     cursor: pointer;
     font-weight: bold;
@@ -147,7 +154,7 @@ h1, h2 {
 }
 
 #buscarBtn {
-    background-color: #28a745; /* Verde */
+    background-color: #28a745; 
 }
 
 #buscarBtn:hover {
@@ -155,7 +162,7 @@ h1, h2 {
 }
 
 #borrarFiltroBtn {
-    background-color: #dc3545; /* Rojo */
+    background-color: #dc3545; 
 }
 
 #borrarFiltroBtn:hover {
@@ -169,7 +176,7 @@ table {
     text-align: left;
     margin-top: 20px;
     border-radius: 8px;
-    overflow: hidden; /* Para que las esquinas se vean redondas */
+    overflow: hidden; 
 }
 
 th, td {
